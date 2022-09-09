@@ -2,15 +2,29 @@ import styled, {keyframes} from "styled-components";
 
 function App() {
   return (
-    <Wrapper>
-      <Box>
-        <Emoji as="p">🥰</Emoji>
-      </Box>
-      <Emoji>🥰</Emoji>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Box>
+          <Emoji as="p">🥰</Emoji>
+        </Box>
+        <Emoji>🔥</Emoji>
+      </Wrapper>
+      <Input />
+      <Input />
+      <Input />
+      <Input />
+    </>
   );
 }
+
+//attrs 사용하기
+const Input = styled.input.attrs({required: true, maxLength: 10, minLength: 3})`
+  background-color: teal;
+  color: white;
+`;
+// 애니메이션 사용하기
 const rotateAnimation = keyframes`
+// from{} to{} 혹은
 0% {
   tranform: rotate(0deg);
   border-radius: 0px;
@@ -25,7 +39,7 @@ const rotateAnimation = keyframes`
   
 }
 `;
-
+// 컴포넌트 자체를 target 해서 css 적용하기
 const Emoji = styled.span`
   font-size: 50px;
 `;
@@ -42,6 +56,7 @@ const Box = styled.div`
     font-size: 100px;
   }
 `;
+
 const Wrapper = styled.div`
   display: flex;
 `;
