@@ -1,36 +1,37 @@
-import React from "react";
-import styled from "styled-components";
+import Router from "./routes/Router";
+import GlobalStyle from "./GlobalStyle";
+import {ReactQueryDevtools} from "react-query/devtools";
+import {useState} from "react";
+import {ThemeProvider} from "styled-components";
+import Toggler from "./Toggles";
 
+const dark = {
+  bgColor: "#2f3640",
+  textColor: "#f5f6fa",
+  accentColor: "#8c7ae6",
+};
+const light = {
+  bgColor: "#f5f6fa",
+  textColor: "#2f3640",
+  accentColor: "#8c7ae6",
+};
 function App() {
-  const onClick = (evt: React.MouseEvent<HTMLButtonElement>) => {};
+  const [darkMode, setDarkMode] = useState(true);
+  const toggleTheme = () => {
+    setDarkMode((prev) => !prev);
+  };
   return (
-    <Container>
-      <Dummy text="hello" active />
-      {/* <form> */}
-      <button onClick={onClick}>Click me</button>
-      {/* </form> */}
-    </Container>
+    <>
+      <ThemeProvider theme={darkMode ? dark : light}>
+        <GlobalStyle />
+        <Toggler onClick={toggleTheme}>
+          {darkMode ? "🌞 Light Mode" : "🌙 Dark Mode"}
+        </Toggler>
+        <Router />
+        <ReactQueryDevtools initialIsOpen={true} />
+      </ThemeProvider>
+    </>
   );
 }
 
-interface DummyProps {
-  text: string;
-  active?: boolean;
-}
-function Dummy({text, active = false}: DummyProps) {
-  return (
-    <H1>
-      {text}
-      {String(active)}
-    </H1>
-  );
-}
-
-const H1 = styled.h1`
-  color: ${(props) => props.theme.textColor};
-`;
-
-const Container = styled.div`
-  background-color: ${(props) => props.theme.bgColor};
-`;
 export default App;
