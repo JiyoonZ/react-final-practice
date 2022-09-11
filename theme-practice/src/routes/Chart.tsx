@@ -1,4 +1,3 @@
-import {useParams} from "react-router-dom";
 import {useOutletContext} from "react-router";
 import {useQuery} from "react-query";
 import {fetchCoinHistory} from "../api";
