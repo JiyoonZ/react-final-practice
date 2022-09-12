@@ -91,12 +91,12 @@ const Wrapper = styled.div`
   animation: ${FadeAnimation} 0.5s ease-in;
 `;
 const TitleBox = styled.div`
-  background-color: ${(props) => props.theme.textColor};
-  color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.cardBgColor};
+  color: ${(props) => props.theme.textColor};
   width: 130px;
   height: 40px;
   border-radius: 12px;
-  opacity: 0.5;
+  opacity: 0.7;
   font-weight: 600;
   font-size: 15px;
   display: flex;

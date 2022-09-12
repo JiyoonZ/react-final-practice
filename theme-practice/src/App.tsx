@@ -4,17 +4,8 @@ import {ReactQueryDevtools} from "react-query/devtools";
 import {useState} from "react";
 import {ThemeProvider} from "styled-components";
 import Toggler from "./Toggles";
+import {darktheme, lighttheme} from "./theme";
 
-const dark = {
-  bgColor: "#2f3640",
-  textColor: "#f5f6fa",
-  accentColor: "#8c7ae6",
-};
-const light = {
-  bgColor: "#f5f6fa",
-  textColor: "#2f3640",
-  accentColor: "#8c7ae6",
-};
 function App() {
   const [darkMode, setDarkMode] = useState(true);
   const toggleTheme = () => {
@@ -22,7 +13,7 @@ function App() {
   };
   return (
     <>
-      <ThemeProvider theme={darkMode ? dark : light}>
+      <ThemeProvider theme={darkMode ? darktheme : lighttheme}>
         <GlobalStyle />
         <Toggler onClick={toggleTheme}>
           {darkMode ? "🌞 Light Mode" : "🌙 Dark Mode"}

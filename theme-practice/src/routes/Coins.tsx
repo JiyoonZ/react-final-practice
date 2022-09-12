@@ -71,13 +71,13 @@ const Header = styled.header`
 `;
 const CoinsList = styled.ul``;
 const Coin = styled.li`
-  background-color: ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.cardBgColor};
   border-radius: 15px;
   margin-bottom: 10px;
   a {
     display: flex;
     align-items: center;
-    color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
     padding: 20px;
     transition: color 0.2s ease-in;
   }
