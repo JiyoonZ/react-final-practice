@@ -1,11 +1,14 @@
-import {useParams} from "react-router-dom";
+import {useOutletContext, useParams} from "react-router-dom";
 import {users} from "../../db";
 
+interface IFollowersContext {
+  nameOfMyUser: string;
+}
 function Followers() {
-  const {userId} = useParams();
+  const {nameOfMyUser} = useOutletContext<IFollowersContext>();
   return (
     <>
-      <h1>🏁 {users[Number(userId) - 1].name}'s Follower is...</h1>
+      <h2>🏁 {nameOfMyUser}'s Follower is...</h2>
       <p>🚀</p>
     </>
   );

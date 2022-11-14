@@ -11,7 +11,11 @@ function User() {
       <Link to={"followers"}>
         <h1>See Followers!</h1>
       </Link>
-      <Outlet />
+      <Outlet
+        context={{
+          nameOfMyUser: users[Number(userId) - 1].name,
+        }}
+      />
     </>
   );
 }
