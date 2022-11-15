@@ -5,19 +5,16 @@ import {useState} from "react";
 import {ThemeProvider} from "styled-components";
 import Toggler from "./Toggles";
 import {darktheme, lighttheme} from "./theme";
+import {useRecoilValue} from "recoil";
+import {isDarkAtom} from "./atoms";
 
 function App() {
-  const [darkMode, setDarkMode] = useState(true);
-  const toggleTheme = () => {
-    setDarkMode((prev) => !prev);
-  };
+  const isDark = useRecoilValue(isDarkAtom);
   return (
     <>
-      <ThemeProvider theme={darkMode ? darktheme : lighttheme}>
+      <ThemeProvider theme={isDark ? darktheme : lighttheme}>
         <GlobalStyle />
-        <Toggler onClick={toggleTheme}>
-          {darkMode ? "🌞 Light Mode" : "🌙 Dark Mode"}
-        </Toggler>
+
         <Router />
         <ReactQueryDevtools initialIsOpen={true} />
       </ThemeProvider>

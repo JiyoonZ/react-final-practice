@@ -13,6 +13,6 @@ const Toggler = styled.button`
   cursor: pointer;
   position: absolute;
   top: 6%;
-  left: 65%;
+  left: 60%;
 `;
 export default Toggler;
