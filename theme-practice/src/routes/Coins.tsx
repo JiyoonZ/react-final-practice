@@ -4,6 +4,9 @@ import {Link} from "react-router-dom";
 import styled from "styled-components";
 import {fetchCoins} from "../api";
 import {Helmet} from "react-helmet";
+import Toggler from "../Toggles";
+import {useRecoilValue, useSetRecoilState} from "recoil";
+import {isDarkAtom} from "../atoms";
 
 interface ICoin {
   id: string;
@@ -14,8 +17,12 @@ interface ICoin {
   is_active: boolean;
   type: string;
 }
-
 function Coins() {
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const isDark = useRecoilValue(isDarkAtom);
+  // 토글 함수
+  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
+
   const {isLoading, data} = useQuery<ICoin[]>(["allCoins"], fetchCoins);
 
   return (
@@ -25,6 +32,9 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>코인</Title>
+        <Toggler onClick={toggleDarkAtom}>
+          {isDark ? "🌞 Light Mode" : "🌙 Dark Mode"}
+        </Toggler>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
