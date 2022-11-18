@@ -1,6 +1,7 @@
-import {useRef} from "react";
 import {Droppable} from "react-beautiful-dnd";
+import {useForm} from "react-hook-form";
 import styled from "styled-components";
+import {ITodo} from "../atoms";
 import DraggableCard from "./DraggableCard";
 
 const Wrapper = styled.div`
@@ -32,24 +33,36 @@ const Area = styled.div<IAreaProps>`
   transition: background-color 0.3s ease-in-out;
   padding: 20px;
 `;
+const Form = styled.form`
+  width: 100%;
+  input {
+    width: 100%;
+  }
+`;
 interface IBoard {
-  todos: string[];
+  todos: ITodo[];
   boardId: string;
 }
+interface IForm {
+  todo: string;
+}
 function Board({todos, boardId}: IBoard) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const onClick = () => {
-    inputRef.current?.focus();
-    setTimeout(() => {
-      inputRef.current?.blur();
-    }, 5000);
+  const {register, handleSubmit, setValue} = useForm<IForm>();
+  const onValid = ({todo}: IForm) => {
+    setValue("todo", "");
   };
-
   return (
     <Wrapper>
       <Title>{boardId.toUpperCase()}</Title>
-      <input ref={inputRef} placeholder="grab me" />
-      <button onClick={onClick}>click me</button>
+      <Form onSubmit={handleSubmit(onValid)}>
+        <input
+          {...register("todo", {
+            required: true,
+          })}
+          type="text"
+          placeholder={`Add task on ${boardId}`}
+        />
+      </Form>
       <Droppable droppableId={boardId}>
         {(magic, info) => (
           <Area
@@ -59,7 +72,12 @@ function Board({todos, boardId}: IBoard) {
             {...magic.droppableProps}
           >
             {todos.map((todo, index) => (
-              <DraggableCard key={todo} index={index} todo={todo} />
+              <DraggableCard
+                key={todo.id}
+                index={index}
+                todoId={todo.id}
+                todoText={todo.text}
+              />
             ))}
             {/* 요소가 드래그될때마다 빈곳의 크기가 변하는거 방지 */}
             {magic.placeholder}
