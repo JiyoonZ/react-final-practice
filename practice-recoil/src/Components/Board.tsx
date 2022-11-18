@@ -16,9 +16,19 @@ const Title = styled.div`
   text-align: center;
   margin-bottom: 15px;
 `;
-const Area = styled.div`
-  background-color: blue;
+interface IAreaProps {
+  isDraggingOver: boolean;
+  draggingFromThisWith: boolean;
+}
+const Area = styled.div<IAreaProps>`
+  background-color: ${(props) =>
+    props.isDraggingOver
+      ? "pink"
+      : props.draggingFromThisWith
+      ? "red"
+      : "blue"};
   flex-grow: 1;
+  transition: background-color 0.3s ease-in-out;
 `;
 interface IBoard {
   todos: string[];
@@ -29,8 +39,13 @@ function Board({todos, boardId}: IBoard) {
     <Wrapper>
       <Title>{boardId.toUpperCase()}</Title>
       <Droppable droppableId={boardId}>
-        {(magic) => (
-          <Area ref={magic.innerRef} {...magic.droppableProps}>
+        {(magic, snapshot) => (
+          <Area
+            isDraggingOver={snapshot.isDraggingOver}
+            draggingFromThisWith={Boolean(snapshot.draggingFromThisWith)}
+            ref={magic.innerRef}
+            {...magic.droppableProps}
+          >
             {todos.map((todo, index) => (
               <DraggableCard key={todo} index={index} todo={todo} />
             ))}
