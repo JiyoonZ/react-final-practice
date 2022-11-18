@@ -4,7 +4,7 @@ import DraggableCard from "./DraggableCard";
 
 const Wrapper = styled.div`
   width: 300px;
-  padding: 15px 10px;
+  padding-top: 10px;
   background-color: ${(props) => props.theme.boardColor};
   border-radius: 5px;
   min-height: 300px;
@@ -23,12 +23,13 @@ interface IAreaProps {
 const Area = styled.div<IAreaProps>`
   background-color: ${(props) =>
     props.isDraggingOver
-      ? "pink"
+      ? "#dfe6e9"
       : props.draggingFromThisWith
-      ? "red"
-      : "blue"};
+      ? "#b2bec3"
+      : "transparent"};
   flex-grow: 1;
   transition: background-color 0.3s ease-in-out;
+  padding: 20px;
 `;
 interface IBoard {
   todos: string[];
@@ -39,10 +40,10 @@ function Board({todos, boardId}: IBoard) {
     <Wrapper>
       <Title>{boardId.toUpperCase()}</Title>
       <Droppable droppableId={boardId}>
-        {(magic, snapshot) => (
+        {(magic, info) => (
           <Area
-            isDraggingOver={snapshot.isDraggingOver}
-            draggingFromThisWith={Boolean(snapshot.draggingFromThisWith)}
+            isDraggingOver={info.isDraggingOver}
+            draggingFromThisWith={Boolean(info.draggingFromThisWith)}
             ref={magic.innerRef}
             {...magic.droppableProps}
           >
