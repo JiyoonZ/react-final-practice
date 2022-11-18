@@ -3,6 +3,7 @@ import styled from "styled-components";
 import DraggableCard from "./DraggableCard";
 
 const Wrapper = styled.div`
+  width: 300px;
   padding: 30px 10px;
   padding-top: 15px;
   background-color: ${(props) => props.theme.boardColor};
@@ -20,20 +21,20 @@ interface IBoard {
 }
 function Board({todos, boardId}: IBoard) {
   return (
-    <>
+    <Wrapper>
+      <Title>{boardId.toUpperCase()}</Title>
       <Droppable droppableId={boardId}>
         {(magic) => (
-          <Wrapper ref={magic.innerRef} {...magic.droppableProps}>
-            <Title>{boardId.toUpperCase()}</Title>
+          <div ref={magic.innerRef} {...magic.droppableProps}>
             {todos.map((todo, index) => (
               <DraggableCard key={todo} index={index} todo={todo} />
             ))}
             {/* 요소가 드래그될때마다 빈곳의 크기가 변하는거 방지 */}
             {magic.placeholder}
-          </Wrapper>
+          </div>
         )}
       </Droppable>
-    </>
+    </Wrapper>
   );
 }
 

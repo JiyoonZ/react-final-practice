@@ -6,26 +6,27 @@ import Board from "./Components/Board";
 
 const Wrapper = styled.div`
   display: flex;
-  max-width: 680px;
-  width: 100%;
+  width: 100vw;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
   height: 100vh;
 `;
 const Boards = styled.div`
-  display: grid;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   width: 100%;
   gap: 10px;
-  grid-template-columns: repeat(3, 1fr);
 `;
 
 function App() {
   const [todos, setTodos] = useRecoilState(todoState);
   const onDragEnd = (info: DropResult) => {
-    console.log(info);
+    // console.log(info);
     // draggable한 아이템을 삭제한다.
     const {destination, draggableId, source} = info;
+    if (!destination) return;
     // board ID 체크하기
     if (destination?.droppableId === source.droppableId) {
       // 같이 보드내에서 움직일 경우
@@ -39,17 +40,18 @@ function App() {
           [source.droppableId]: boardCopy,
         };
       });
-    } else {
+    }
+    if (destination?.droppableId !== source.droppableId) {
       setTodos((allBoards) => {
         // 출발할 보드 , 도착할 보드 복사하기
         const sourceBoard = [...allBoards[source.droppableId]];
-        const destiBoard = [...allBoards[destination?.droppableId as any]];
+        const destiBoard = [...allBoards[destination?.droppableId]];
         sourceBoard.splice(source.index, 1);
-        destiBoard.splice(destination?.index as any, 0, draggableId);
+        destiBoard.splice(destination?.index, 0, draggableId);
         return {
           ...allBoards,
           [source.droppableId]: sourceBoard,
-          [destination?.droppableId as any]: destiBoard,
+          [destination?.droppableId]: destiBoard,
         };
       });
     }
