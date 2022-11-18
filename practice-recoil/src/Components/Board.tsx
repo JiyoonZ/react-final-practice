@@ -58,7 +58,7 @@ function Board({todos, boardId}: IBoard) {
     };
     setValue("todo", "");
     setTodos((allBoards) => {
-      return {...allBoards, [boardId]: [...allBoards[boardId], newTodo]};
+      return {...allBoards, [boardId]: [newTodo, ...allBoards[boardId]]};
     });
   };
   return (
