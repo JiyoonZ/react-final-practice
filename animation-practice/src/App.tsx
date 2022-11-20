@@ -63,6 +63,22 @@ const circleVars = {
     y: 0,
   },
 };
+const gestureVars = {
+  click: {
+    scale: 0.8,
+    borderRadius: "50%",
+  },
+  hover: {
+    scale: 1.2,
+    rotateZ: 180,
+  },
+  drag: {
+    backgroundColor: "rgb(0, 0, 0)",
+    transition: {
+      duration: 5,
+    },
+  },
+};
 function App() {
   return (
     <Wrapper>
@@ -73,6 +89,13 @@ function App() {
         <Circle variants={circleVars} />
         <Circle variants={circleVars} />
       </Box2>
+      <Box
+        drag
+        variants={gestureVars}
+        whileHover="hover"
+        whileTap="click"
+        whileDrag="drag"
+      />
     </Wrapper>
   );
 }
