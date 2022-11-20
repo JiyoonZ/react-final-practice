@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {motion} from "framer-motion";
+import {useRef} from "react";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -30,6 +31,16 @@ const Circle = styled(motion.div)`
   height: 70px;
   background-color: white;
   place-self: center;
+`;
+const BiggerBox = styled.div`
+  width: 400px;
+  height: 400px;
+  border-radius: 40px;
+  background-color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 `;
 //Varient : start, end...
 const myVars = {
@@ -80,6 +91,7 @@ const gestureVars = {
   },
 };
 function App() {
+  const biggerBoxRef = useRef<HTMLDivElement>(null);
   return (
     <Wrapper>
       <Box variants={myVars} initial="start" animate="end" />
@@ -89,13 +101,18 @@ function App() {
         <Circle variants={circleVars} />
         <Circle variants={circleVars} />
       </Box2>
-      <Box
-        drag
-        variants={gestureVars}
-        whileHover="hover"
-        whileTap="click"
-        whileDrag="drag"
-      />
+      <BiggerBox ref={biggerBoxRef}>
+        <Box
+          drag
+          dragSnapToOrigin
+          dragElastic={1}
+          dragConstraints={biggerBoxRef}
+          variants={gestureVars}
+          // whileHover="hover"
+          // whileTap="click"
+          whileDrag="drag"
+        />
+      </BiggerBox>
     </Wrapper>
   );
 }
